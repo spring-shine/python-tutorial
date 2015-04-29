@@ -170,7 +170,7 @@ Jack: 4098; Sjoerd: 4127; Dcab: 8637678
 
 这种方式与新的内置函数 `vars()` 组合使用非常有效。该函数返回包含所有局部变量的字典。
 
-要进一步了解字符串格式化方法 `str.format()` ，参见 [formatstrings]() 。
+要进一步了解字符串格式化方法 `str.format()` ，参见 [Forma String Syntax](https://docs.python.org/3/library/string.html#formatstrings) 。
 
 ### 7.1.1. 旧式的字符串格式化
 
@@ -184,7 +184,7 @@ The value of PI is approximately 3.142.
 
 ```
 
-进一步的信息可以参见　[string-formatting]() 一节。
+进一步的信息可以参见　[printf-style String Formatting](https://docs.python.org/3/library/stdtypes.html#old-string-formatting) 一节。
 
 ## 7.2. 文件读写
 
