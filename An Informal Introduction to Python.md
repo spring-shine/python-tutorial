@@ -88,11 +88,12 @@ Python 完全支持浮点数，不同类型的操作数混在一起时，操作�
 ```
 >>> tax = 12.5 / 100  
 >>> price = 100.50   
->>> price * tax12.5625 
->>> price + _113.0625  
+>>> price * tax
+12.5625 
+>>> price + _
+113.0625  
 >>> round(_, 2)  
 113.06  
-
 ```
 
 此变量对于用户是只读的。不要尝试给它赋值 —— 你只会创建一个独立的同名局部变量，它屏蔽了系统内置变量的魔术效果.
@@ -141,10 +142,10 @@ Second line.
 ```
 
 >>> print('C:\some\name')  # here \n means newline!  
-C:\someame  
+C:\some
+ame  
 >>> print(r'C:\some\name')  # note the r before the quote  
 C:\some\name  
-
 ```
 
 字符串常量可用跨越多行，其中一种使用方式是用三重引号： ` """  ... """ ` 或者 `  ''' ... ''' `。如果在第一个三引号后面不加反斜杠 `\`，则字符串之前会自动加一空行。可以用反斜杠 `\` 阻止这种行为。如下面的列子：
@@ -192,10 +193,10 @@ Usage: thingy [OPTIONS]
 
 >>> prefix = 'Py'  
 >>> prefix 'thon'  # can't concatenate a variable and a string literal  
-  ...  
+     ...  
 SyntaxError: invalid syntax  
 >>> ('un' * 3) 'ium'  
-  ...
+     ...
 SyntaxError: invalid syntax  
 
 ```
@@ -221,13 +222,15 @@ SyntaxError: invalid syntax
 
 ```
 
-字符串可以使用索引操作，第一个字符的索引为 0，Python中没有单独的字符类型，一个字符也字符串。
+字符串可以使用索引操作，第一个字符的索引为 0，Python 中没有单独的字符类型，一个字符也字符串。
 
 
 ```
 
 >>> word = 'Python'  
-'P'>>> word[5]  # character in position 5  
+>>> word[0]  #character in position 0
+'P'
+>>> word[5]  # character in position 5  
 'n'  
 
 ```
@@ -323,9 +326,11 @@ Python 字符串是不能改变的—它是不可变量，因此，给某个索�
 
 ```
 >>> word[0] = 'J'  
-  ...TypeError: 'str' object does not support item assignment  
+  ...
+  TypeError: 'str' object does not support item assignment  
 >>> word[2:] = 'py'   
-  ...TypeError: 'str' object does not support item assignment  
+  ...
+  TypeError: 'str' object does not support item assignment  
 
 ```
 
@@ -343,7 +348,7 @@ Python 字符串是不能改变的—它是不可变量，因此，给某个索�
 内置函数 `len()` 返回一个字符串的长度
 
 ```
->> s = 'supercalifragilisticexpialidocious'  
+>>> s = 'supercalifragilisticexpialidocious'  
 >>> len(s)  
 34  
 
@@ -465,8 +470,10 @@ Python 有几个复合 数据类型，用于表示其它的值。最通用的�
 >>> x = [a, n]  
 >>> x  
 [['a', 'b', 'c'], [1, 2, 3]]  
->>> x[0]['a', 'b', 'c']  
->>> x[0][1]'b'  
+>>> x[0]
+['a', 'b', 'c']  
+>>> x[0][1]
+'b'  
 
 ```
 
@@ -482,7 +489,12 @@ Python 有几个复合 数据类型，用于表示其它的值。最通用的�
 ...     print(b)  
 ...     a, b = b, a+b  
 ...  
-112358  
+1
+1
+2
+3
+5
+8  
 
 ```
 
@@ -509,9 +521,9 @@ The value of i is 65536
 ```
 >>> a, b = 0, 1  
 >>> while b < 1000:  
-...  print(b, end=',')  
+...    print(b, end=',')  
 ...    a, b  = b, a+b.  
-..
+...
 1,1,2,3,5,8,13,21,34,55,89,144,233,377,610,987,  
 
 ```
