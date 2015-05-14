@@ -7,18 +7,20 @@
 
 ```
 # Fibonacci numbers module  
+
 def fib(n):   # write Fibonacci series up to n  
      a, b = 0, 1  
      while b < n:  
          print(b, end=' ')  
          a, b = b, a+b  
-print()def fib2(n): # return Fibonacci series up to n  
-   Result = []  
+     print()
+def fib2(n): # return Fibonacci series up to n  
+  result = []  
    a, b = 0, 1  
-   While b < n:  
+   while b < n:  
        result.append(b)  
         a, b = b, a+b  
-    Return result  
+    return result  
 
 ```
 
@@ -35,7 +37,8 @@ print()def fib2(n): # return Fibonacci series up to n
 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987  
 >>> fibo.fib2(100)  
 [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]  
->>> fibo.__name__'fibo'  
+>>> fibo.__name__
+'fibo'  
 ```
 
 如果打算频繁使用一个函数，你可以将它赋予一个本地变量:    
@@ -85,15 +88,15 @@ import 语句的一个变体直接从被导入的模块中导入命名到本模
 当你使用以下方式运行 Python 模块时，模块中的代码便会被执行:  
 
 ```
-Python fibo.py <arguments>
+python fibo.py <arguments>
 ```
 
 模块中的代码会被执行，就像导入它一样，不过此时 ` __name__` 被设置为 `"__main__"` 。这相当于，如果你在模块后加入如下代码:  
 
 ```
 If __name__ == "__main__":  
-Import sys  
-fib(int(sys.argv[1]))  
+    import sys  
+    fib(int(sys.argv[1]))  
 ```
 
 就可以让此文件像作为模块导入时一样作为脚本执行。此代码只有在模块作为 “main” 文件执行时才被调用: 
@@ -148,8 +151,10 @@ Python 带有一个标准模块库，并发布有独立的文档，名为 Python
 ```
 
 >>> import sys  
->>> sys.ps1'>>> '  
->>> sys.ps2'... '  
+>>> sys.ps1
+'>>> '  
+>>> sys.ps2
+'... '  
 >>> sys.ps1 = 'C>   '
 C> print('Yuck!')  
 Yuck!  
@@ -180,16 +185,19 @@ C>
 ['__displayhook__','__doc__','__excepthook__','__loader__','__name__',   
 '__package__', '__stderr__', '__stdin__', '__stdout__',    
 '_clear_type_cache','_current_frames','_debugmallocstats','_getframe',   
-'_home', '_mercurial', '_xoptions', 'abiflags',    'api_version', 'argv',   'base_exec_prefix', 'base_prefix', 'builtin_module_names', 'byteorder',   
+'_home', '_mercurial', '_xoptions', 'abiflags',    'api_version', 'argv',   
+'base_exec_prefix', 'base_prefix', 'builtin_module_names', 'byteorder',   
 'call_tracing', 'callstats', 'copyright', 'displayhook',   
 'dont_write_bytecode', 'exc_info', 'excepthook', 'exec_prefix',  
- 'executable', 'exit', 'flags', 'float_info', 'float_repr_style',   
+'executable', 'exit', 'flags', 'float_info', 'float_repr_style',   
 'getcheckinterval', 'getdefaultencoding', 'getdlopenflags',   
-'getfilesystemencoding', 'getobjects', 'getprofile', 'getrecursionlimit',    'getrefcount', 'getsizeof', 'getswitchinterval', 'gettotalrefcount',   
+'getfilesystemencoding', 'getobjects', 'getprofile', 'getrecursionlimit',    
+'getrefcount', 'getsizeof', 'getswitchinterval', 'gettotalrefcount',   
 'gettrace', 'hash_info', 'hexversion', 'implementation', 'int_info',   
 'intern', 'maxsize', 'maxunicode', 'meta_path', 'modules', 'path',  
  'path_hooks', 'path_importer_cache', 'platform', 'prefix', 'ps1',  
- 'setcheckinterval', 'setdlopenflags', 'setprofile', 'setrecursionlimit',      'setswitchinterval', 'settrace', 'stderr', 'stdin', 'stdout',  
+ 'setcheckinterval', 'setdlopenflags', 'setprofile', 'setrecursionlimit',      
+ 'setswitchinterval', 'settrace', 'stderr', 'stdin', 'stdout',  
  'thread_info', 'version', 'version_info', 'warnoptions']  
 
 ```
@@ -255,9 +263,9 @@ C>
 ```
 
 sound/                           Top-level package         
- __init__.py               Initialize the sound package        
-formats/                  Subpackage for file format conversions   
-            __init__.py  
+     __init__.py                 Initialize the sound package        
+     formats/                    Subpackage for file format conversions   
+              __init__.py  
               wavread.py  
               wavwrite.py  
               aiffread.py  
@@ -288,7 +296,7 @@ formats/                  Subpackage for file format conversions
 
 ```
 
-Import sound.effects.echo
+import sound.effects.echo
 
 ```
 
@@ -301,7 +309,7 @@ sound.effects.echo.echofilter(input, output, delay=0.7, atten=4)
 导入包时有一个可以选择的方式:
 
 ```
-From sound.effects import echo
+from sound.effects import echo
 
 ```
 
@@ -314,7 +322,7 @@ echo.echofilter(input, output, delay=0.7, atten=4)
 还有另一种变体用于直接导入函数或变量:
 
 ```
-From sound.effects.echo import echofilter
+from sound.effects.echo import echofilter
 
 ```
 
@@ -344,9 +352,9 @@ __all__ = ["echo", "surround", "reverse"]
 如果没有定义` __all__ `， `from Sound.Effects import *` 语句 不会 从 sound.effects 包中导入所有的子模块。无论包中定义多少命名，只能确定的是导入了 sound.effects 包（可能会运行 `__init__.py `中的初始化代码）以及包中定义的所有命名会随之导入。这样就从 `__init__.py `中导入了每一个命名（以及明确导入的子模块）。同样也包括了前述的import 语句从包中明确导入的子模块，考虑以下代码:
 
 ```
-Import sound.effects.echo  
+import sound.effects.echo  
 import sound.effects.surround  
-From sound.effects import *  
+from sound.effects import *  
 
 ```
 
@@ -362,7 +370,7 @@ From sound.effects import *
 你可以用这样的形式` from module import name `来写显式的相对位置导入。那些显式相对导入用点号标明关联导入当前和上级包。以 surround 模块为例，你可以这样用:
 
 ``` 
-From . Import echo  
+from . Import echo  
 from .. Import formats  
 from ..filters import equalizer  
 
