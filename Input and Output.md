@@ -27,7 +27,7 @@
 >>> print(s)  
 The value of x is 32.5, and y is 40000...  
 >>> # The repr() of a string adds string quotes and backslashes:  
-... Hello = 'hello, world\n'  
+... hello = 'hello, world\n'  
 >>> hellos = repr(hello)  
 >>> print(hellos) 
 'hello, world\n'  
@@ -42,12 +42,12 @@ The value of x is 32.5, and y is 40000...
 ```
 
 >>> for x in range(1, 11):  
-...      print(repr(x).rjust(2), repr(x*x).rjust(3), end=' ')  
+...     print(repr(x).rjust(2), repr(x*x).rjust(3), end=' ')  
 ...     # Note use of 'end' on previous line  
 ...     print(repr(x*x*x).rjust(4))  
 ...   
 1   1    1  
- 2   4    8   
+2   4    8   
 3   9   27   
 4  16   64   
 5  25  125   
@@ -56,20 +56,6 @@ The value of x is 32.5, and y is 40000...
 8  64  512   
 9  81  729  
 10 100 1000  
->>> for x in range(1, 11):  
-...      print('{0:2d} {1:3d} {2:4d}'.format(x, x*x, x*x*x))  
-...   
-1   1    1   
-2   4    8   
-3   9   27   
-4  16   64   
-5  25  125  
- 6  36  216   
-7  49  343   
-8  64  512  
-9  81  729  
-10 100 1000  
-
 ```
 
 (注意第一个例子， print 在每列之间加了一个空格，它总是在参数间加入空格。)
@@ -134,7 +120,12 @@ The value of PI is approximately 3.14159265359.
 The value of PI is approximately 3.141592653589793.  
 
 ```
-
+一个可选的':' 和格式说明符可以用字段来名。这允许对值进行更深的格式化控制，下面的实例Pi小数点后三位
+```
+>>> import math
+>>> print('The value of PI is approximately {0:3f}.'.format(math.pi))
+The value of PI is approximately 3.142.
+```
 字段名后允许可选的 `':'` 和格式指令。这允许对值的格式化加以更深入的控制。下例将 Pi 转为三位精度。 
 
 ```
@@ -142,7 +133,8 @@ The value of PI is approximately 3.141592653589793.
 >>> table = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 7678}  
 >>> for name, phone in table.items():  
 ...     print('{0:10} ==> {1:10d}'.format(name, phone))  
-...Jack       ==>       4098  
+...
+Jack       ==>       4098  
 Dcab       ==>       7678  
 Sjoerd     ==>       4127  
 
@@ -210,8 +202,8 @@ The value of PI is approximately 3.142.
 
 ```
 
->>> f.read()'  
-This is the entire file.\n'  
+>>> f.read()
+'This is the entire file.\n'  
 >>> f.read()  
 ''  
 
@@ -224,7 +216,6 @@ This is the entire file.\n'
 >>> f.readline()  
 'This is the first line of the file.\n'  
 >>> f.readline()  
-
 'Second line of the file\n'  
 >>> f.readline()  
 ''  
@@ -235,9 +226,11 @@ This is the entire file.\n'
 
 ```
 
->>> for line in f  
-:...      print(line, end='')  
-...This is the first line of the file.Second line of the file  
+>>> for line in f:
+...      print(line, end='')  
+...
+This is the first line of the file.
+Second line of the file  
 
 ```
 
@@ -246,7 +239,6 @@ This is the entire file.\n'
 `f.write(string)` 将字符串的内容写入文件,返回字符数。
 
 ```
-
 >>> f.write('This is a test\n')  
 15  
 
@@ -255,10 +247,10 @@ This is the entire file.\n'
 想要写入其他非字符串内容，首先要将它转换为字符串:  
 
 ```
-
 >>> value = ('the answer', 42)  
 >>> s = str(value)  
->>> f.write(s)18   
+>>> f.write(s)
+18   
  
 ```
 
@@ -267,7 +259,6 @@ This is the entire file.\n'
 需要改变文件对象指针话话，使用 `f.seek(offset,from_what)` 。指针在该操作中从指定的引用位置移动 offset 比特，引用位置由 `from_what` 参数指定。 `from_what` 值为 0 表示自文件起始处开始，1 表示自当前文件指针位置开始，2 表示自文件末尾开始。 `from_what` 可以忽略，其默认值为零，此时从文件头开始。  
 
 ```
-
 >>> f = open('workfile', 'rb+')  
 >>> f.write(b'0123456789abcdef')  
 16  
@@ -319,7 +310,6 @@ True
 如果你有一个对象 x ，一个以写模式打开的文件对象 f ，封装对象的最简单的方法只需要一行代码:
 
 ```
-
 >>> json.dumps([1, 'simple', 'list'])  
 '[1, "simple", "list"]'  
 
@@ -328,9 +318,7 @@ True
 另一个变体转储函数,称为 dump(),可以将对象序列化到一个文本文件。所以如果f是一个写模式打开的文本文件对象，我们可以这样做:
 
 ```
-
 json.dump(x, f)
-
 ```
 
 
@@ -343,5 +331,5 @@ x = json.load(f)
 
 这个简单的序列化技术可以处理列表和字典,但在 JSON 序列化任意类实例需要一点额外的努力。json的参考模块包含一个解释。
 
-参见 pickle,pickle 模块
+**参见**： pickle,pickle 模块
 与 JSON 相反,pickle 是一个协议,允许序列化任意复杂的 Python 对象。因此,它是特定于 Python 和不能用于与其他语言编写的应用程序通信。也是不安全的默认:如果数据被老练的攻击者攻击，来自一个不可信的源的 pickle 数据可以执行任意代码。
