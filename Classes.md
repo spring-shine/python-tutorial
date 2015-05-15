@@ -51,23 +51,24 @@ global 语句用以指明某个特定的变量为全局作用域，并重新绑
 
 ```
 Def scope_test():  
-     Def do_local():  
-          spam = "local spam"  
-     Def do_nonlocal():  
-         Nonlocal spam  
-         Spam = "nonlocal spam"  
-def do_global():  
-    Global spam  
-    spam = "global spam"  
-Spam = "test spam"  
-do_local()  
-print("After local assignment:", spam)  
-do_nonlocal()  
-print("After nonlocal assignment:", spam)  
-do_global()  
-print("After global assignment:", spam)scope_test()  
+    def do_local():  
+        spam = "local spam"  
+    def do_nonlocal():  
+        nonlocal spam  
+        spam = "nonlocal spam"  
+    def do_global():  
+        global spam  
+        spam = "global spam"  
+    spam = "test spam"  
+    do_local()  
+    print("After local assignment:", spam)  
+    do_nonlocal()  
+    print("After nonlocal assignment:", spam)  
+    do_global()  
+    print("After global assignment:", spam)
+    
+scope_test()  
 print("In global scope:", spam)  
-  
 ```
 
 以上示例代码的输出为:
@@ -77,7 +78,6 @@ After local assignment: test spam
 After nonlocal assignment: nonlocal spam  
 After global assignment: nonlocal spam  
 In global scope: global spam
-
 ```
 
 注意： local 赋值语句是无法改变` scope_test` 的 spam 绑定。 nonlocal赋值语句改变了 `scope_test` 的 spam 绑定，并且 global 赋值语句从模块级改变了 spam 绑定。
@@ -92,13 +92,12 @@ In global scope: global spam
 类定义最简单的形式如下:  
 
 ```
-Class ClassName:  
-   <statement-1>  
-.  
-.  
-.  
-<statement-N>  
-
+class ClassName:  
+    <statement-1>  
+    .  
+    .  
+    .  
+    <statement-N>  
 ```
 
 类的定义就像函数定义（ def 语句），要先执行才能生效。（你当然可以把它放进 if 语句的某一分支，或者一个函数的内部。）  
@@ -116,12 +115,11 @@ Class ClassName:
 属性引用 使用和 Python 中所有的属性引用一样的标准语法：obj.name。类对象创建后，类命名空间中所有的命名都是有效属性名。所以如果类定义是这样:  
 
 ```
-Class MyClass:  
-"""A simple example class"""  
-i = 12345  
-Def f(self):  
-  return 'hello world'  
-
+class MyClass:  
+    """A simple example class"""  
+    i = 12345  
+    def f(self):  
+        return 'hello world'  
 ```
 
 那么 MyClass.i 和 MyClass.f 是有效的属性引用，分别返回一个整数和一个方法对象。也可以对类属性赋值，你可以通过给 MyClass.i 赋值来修改它。` __doc__ `也是一个有效的属性，返回类的文档字符串：`"A simple example class"` 。  
@@ -137,9 +135,8 @@ x = MyClass()
 这个实例化操作（“调用”一个类对象）来创建一个空的对象。很多类都倾向于将对象创建为有初始状态的。因此类可能会定义一个名为`__init__()` 的特殊方法，像下面这样:  
 
 ```
-Def __init__(self):  
-   self.data = []  
-
+def __init__(self):  
+    self.data = []  
 ```
 
 类定义了` __init__() `方法的话，类的实例化操作会自动为新创建的类实例调用 `__init__()` 方法。所以在下例中，可以这样创建一个新的实例:  
@@ -151,14 +148,13 @@ X = MyClass()
 
 ```
 >>> class Complex:  
-...     Def __init__(self, realpart, imagpart):  
-...         Self.r = realpart  
-...         Self.i = imagpart  
+...     def __init__(self, realpart, imagpart):  
+...         self.r = realpart  
+...         self.i = imagpart  
 ...  
 >>> x = Complex(3.0, -4.5)  
 >>> x.r, x.i  
 (3.0, -4.5)  
-
 ```
 
 ### 9.3.3. 实例对象
@@ -168,12 +164,11 @@ X = MyClass()
 数据属性 相当于 Smalltalk 中的“实例变量”或 C++ 中的“数据成员”。和局部变量一样，数据属性不需要声明，第一次使用时它们就会生成。例如，如果` x `是前面创建的 MyClass 实例，下面这段代码会打印出 16 而在堆栈中留下多余的东西:  
 
 ```
-X.counter = 1  
+x.counter = 1  
 while x.counter < 10:  
-X.counter = x.counter * 2  
+    x.counter = x.counter * 2  
 print(x.counter)  
-Del x.counter  
-
+del x.counter  
 ```
 
 另一种为实例对象所接受的引用属性是 方法 。方法是“属于”一个对象的函数。（在 Python 中，方法不止是类实例所独有：其它类型的对象也可有方法。例如，链表对象有 append，insert，remove，sort 等等方法。然而，在后面的介绍中，除非特别说明，我们提到的方法特指类方法）  
@@ -193,7 +188,6 @@ x.f()
 Xf = x.f  
 while True:  
    print(xf())  
-
 ```
 
 会不断的打印 hello world 。
@@ -209,56 +203,62 @@ while True:
 一般来说,实例变量数据对于每个实例是独一无二的，类变量的属性和方法被类的所有实例共享:  
 
 ```
-
-Class Dog:  
-Kind = 'canine'       # class variable shared by all instances  
-def __init__(self, name):  
-    Self.name = name   # instance variable unique to each instance  
+class Dog:  
+    kind = 'canine'         # class variable shared by all instances  
+    def __init__(self, name):  
+        self.name = name    # instance variable unique to each instance
+        
 >>> d = Dog('Fido')  
 >>> e = Dog('Buddy')
->>> d.kind            # shared by all dogs'canine'  
->>> e.kind            # shared by all dogs'canine' 
->>> d.name           # unique to d'Fido'  
->>> e.name           # unique to e'Buddy'  
-
+>>> d.kind                  # shared by all dogs
+'canine'  
+>>> e.kind                  # shared by all dogs
+'canine' 
+>>> d.name                  # unique to d
+'Fido'  
+>>> e.name                  # unique to e
+'Buddy'  
 ```
 
 正如一句话所讨论的关于名称和对象,共享数据可能会有惊人的效果伴随着涉及的可变对象，比如列表和字典。例如,技巧列表下面的代码不应只作为一个类变量,因为一个列表将由所有狗实例共享:  
 
 ```
+class Dog:  
 
-Class Dog:  
-     Tricks = []      # mistaken use of a class   variable    
-     Def __init__(self, name):  
-          Self.name = name  
-Def add_trick(self, trick):  
-     self.tricks.append(trick)>>> d = Dog('Fido')  
+     tricks = []             # mistaken use of a class   variable 
+     
+     def __init__(self, name):  
+         self.name = name  
+     def add_trick(self, trick):  
+         self.tricks.append(trick)
+         
+>>> d = Dog('Fido')  
 >>> e = Dog('Buddy')  
 >>> d.add_trick('roll over')  
 >>> e.add_trick('play dead')  
->>> d.tricks     # unexpectedly shared by all dogs  
+>>> d.tricks                 # unexpectedly shared by all dogs  
 ['roll over', 'play dead']  
-
 ```
 
 正确的类的设计应该使用一个实例变量,而不是:  
 
 ```
+class Dog:
 
-Class Dog:  
-      Def __init__(self, name):  
-          Self.name = name  
-          Self.tricks = []    # creates a new empty list for each dog  
-Def add_trick(self, trick):  
-      self.tricks.append(trick)    
+    def __init__(self, name):  
+        self.name = name  
+        self.tricks = []    # creates a new empty list for each dog 
+        
+    def add_trick(self, trick):  
+        self.tricks.append(trick)    
 >>> d = Dog('Fido')  
 >>> e = Dog('Buddy')  
 >>> d.add_trick('roll over')  
 >>> e.add_trick('play dead')  
->>> d.tricks['roll over']  
+>>> d.tricks
+['roll over']  
 >>> e.tricks  
 ['play dead']  
-
 ```
 
 ## 9.4. 一些说明
@@ -275,15 +275,15 @@ Def add_trick(self, trick):
 类属性的任何函数对象都为那个类的实例定义了一个方法。 函数定义代码不一定非得定义在类中：也可以将一个函数对象赋值给类中的一个局部变量。 例如:  
 
 ```
-
 # Function defined outside the class  
-Def f1(self, x, y):  
-Return min(x, x+y)class C:  
-f = f1  
-Def g(self):  
-    Return 'hello world'  
- h = g  
-
+def f1(self, x, y):  
+    return min(x, x+y)
+    
+class C:  
+    f = f1  
+    def g(self):  
+        return 'hello world'  
+    h = g  
 ```
 
 现在 f, g 和 h 都是类 C 的属性，引用的都是函数对象，因此它们都是 C 实例的方法－－ h 严格等于 g 。要注意的是这种习惯通常只会迷惑程序的读者。  
@@ -291,16 +291,14 @@ Def g(self):
 通过 self 参数的方法属性，方法可以调用其它的方法:  
 
 ```
-
-Class Bag:  
-Def __init__(self):  
-     Self.data = []  
-def add(self, x):   
-   self.data.append(x)  
-Def addtwice(self, x):  
-    self.add(x)  
-    self.add(x)  
-
+class Bag:  
+    def __init__(self):  
+        self.data = []  
+    def add(self, x):   
+        self.data.append(x)  
+    def addtwice(self, x):  
+        self.add(x)  
+        self.add(x)  
 ```
 
 方法可以像引用普通的函数那样引用全局命名。与方法关联的全局作用域是包含类定义的模块。（类本身永远不会做为全局作用域使用。）尽管很少有好的理由在方法 中使用全局数据，全局作用域确有很多合法的用途：其一是方法可以调用导入全局作用域的函数和方法，也可以调用定义在其中的类和函数。通常，包含此方法的类也会定义在这个全局作用域，在下一节我们会了解为何一个方法要引用自己的类。  
@@ -312,21 +310,18 @@ Def addtwice(self, x):
 当然，如果一种语言不支持继承就，“类”就没有什么意义。派生类的定义如下所示:  
 
 ```
-
-Class DerivedClassName(BaseClassName):  
-      <statement-1>  
-.  
-.  
-.  
-<statement-N>  
-
+class DerivedClassName(BaseClassName):  
+    <statement-1>  
+    .  
+    .  
+    .  
+    <statement-N>  
 ```
 
 命名 `BaseClassName `（示例中的基类名）必须与派生类定义在一个作用域内。除了类，还可以用表达式，基类定义在另一个模块中时这一点非常有用:   
 
 ```
-Class DerivedClassName(modname.BaseClassName):
-
+class DerivedClassName(modname.BaseClassName):
 ```
 派生类定义的执行过程和基类是一样的。构造派生类对象时，就记住了基类。这在解析属性引用的时候尤其有用：如果在类中找不到请求调用的属性，就搜索基类。如果基类是由别的类派生而来，这个规则会递归的应用上去。  
 
@@ -347,14 +342,12 @@ Python 有两个用于继承的函数：
 Python 同样有限的支持多继承形式。多继承的类定义形如下例:  
 
 ```
-
-Class DerivedClassName(Base1, Base2, Base3):  
-     <statement-1>  
-.  
-.  
-.  
-<statement-N>  
-
+class DerivedClassName(Base1, Base2, Base3):  
+    <statement-1>  
+    .  
+    .  
+    .  
+    <statement-N>  
 ```
 
 在大多数情况下，在最简单的情况下，你能想到的搜索属性从父类继承的深度优先，左到右，而不是搜索两次在同一个类层次结构中，其中有一个重叠。因此，如果在 `DerivedClassName `（示例中的派生类）中没有找到某个属性，就会搜索 Base1 ，然后（递归的）搜索其基类，如果最终没有找到，就搜索 Base2 ，以此类推。  
@@ -374,21 +367,24 @@ Class DerivedClassName(Base1, Base2, Base3):
 名称重整是有助于子类重写方法，而不会打破组内的方法调用。 例如:  
 
 ```
+class Mapping:  
+    def __init__(self, iterable)  
+        self.items_list = []  
+        self.__update(iterable)
+        
+    def update(self, iterable):  
+        for item in iterable:  
+            self.items_list.append(item)
+            
+    __update = update   # private copy of original update() method
+    
+class MappingSubclass(Mapping):
 
-Class Mapping:  
-Def __init__(self, iterable)  
-   self.items_list = []  
-   self.__update(iterable)  
-Def update(self, iterable):  
-    For item in iterable:  
-         self.items_list.append(item)   
-__update = update   # private copy of original update() methodclass MappingSubclass(Mapping):  
-Def update(self, keys, values):  
- # provides new signature for update()  
- # but does not break __init__()  
-For item in zip(keys, values):  
-    self.items_list.append(item)  
-
+    def update(self, keys, values):  
+        # provides new signature for update()  
+        # but does not break __init__()  
+        for item in zip(keys, values):  
+            self.items_list.append(item)  
 ```
 
 需要注意的是编码规则设计为尽可能的避免冲突，被认作为私有的变量仍然有可能被访问或修改。在特定的场合它也是有用的，比如调试的时候。
@@ -399,15 +395,14 @@ For item in zip(keys, values):
 有时类似于 Pascal 中“记录（ record ）”或 C 中“结构（ struct ）”的数据类型很有用，它将一组已命名的数据项绑定在一起。一个空的类定义可以很好的实现它:  
 
 ```
-
-Class Employee:  
-pass  
+class Employee:  
+pass 
+ 
 john = Employee() # Create an empty employee record  
- # Fill the fields of the record  
-John.name = 'John Doe'    
+# Fill the fields of the record  
+john.name = 'John Doe'    
 john.dept = 'computer lab'   
-John.salary = 1000    
-
+john.salary = 1000    
 ```
 
 某一段 Python 代码需要一个特殊的抽象数据结构的话，通常可以传入一个类，事实上这模仿了该类的方法。例如，如果你有一个用于从文件对象中格式化数据的函数，你可以定义一个带有 `read()` 和 `readline()`方法的类，以此从字符串缓冲读取数据，然后将该类的对象作为参数传入前述的函数。  
@@ -420,38 +415,36 @@ John.salary = 1000
 以下是两种新的，有效的（语义上的）异常抛出形式，使用 raise 语句:  
 
 ```
+raise Class 
 
-Raise Class  
 raise Instance
-
 ```
 
 第一种形式中， `instance` 必须是` Class` 或其派生类的一个实例。第二种形式是以下形式的简写:  
 
 ```
-Raise Class()
-
+raise Class()
 ```
 
 发生的异常其类型如果是 except 子句中列出的类，或者是其派生类，那么它们就是相符的（反过来说－－发生的异常其类型如果是异常子句中列出的类的基类，它们就不相符）。例如，以下代码会按顺序打印 B，C，D:  
 
 ```
-
-Class B(Exception):  
-   Pass  
-Class C(B):  
-   Pass  
-Class D(C):  
-     passfor cls in [B, C, D]:  
-try:  
-   Raise cls()  
-except D:  
-   print("D")  
-except C:  
-   print("C")  
-Except B:  
-     print("B")  
-
+class B(Exception):  
+    Pass  
+class C(B):  
+    Pass  
+class D(C):  
+     pass
+     
+for cls in [B, C, D]:  
+    try:  
+        raise cls()  
+    except D:  
+        print("D")  
+    except C:  
+        print("C")  
+    except B:  
+        print("B")  
 ```
 
 要注意的是如果异常子句的顺序颠倒过来（ `execpt B `在最前），它就会打印 B，B，`B－－`第一个匹配的异常被触发。  
@@ -463,24 +456,21 @@ Except B:
 现在你可能注意到大多数容器对象都可以用 for 遍历: 
 
 ```
-
-For element in [1, 2, 3]:  
-     print(element)  
+for element in [1, 2, 3]:  
+    print(element)  
 for element in (1, 2, 3):  
-     print(element)  
+    print(element)  
 for key in {'one':1, 'two':2};  
-     print(key)  
+    print(key)  
 for char in "123":  
-     print(char)  
+    print(char)  
 For line in open("myfile.txt"):  
     print(line, end='')  
-
 ```
 
 这种形式的访问清晰、简洁、方便。迭代器的用法在 Python 中普遍而且统一。在后台， for 语句在容器对象中调用 `iter()` 。 该函数返回一个定义了 `next()` 方法的迭代器对象，它在容器中逐一访问元素。没有后续的元素时， next() 抛出一个 `StopIteration` 异常通知 for 语句循环结束。以下是其工作原理的示例:  
 
 ```
-
 >>> s = 'abc'  
 >>> it = iter(s)  
 >>> it  
@@ -492,39 +482,39 @@ For line in open("myfile.txt"):
 >>> next(it)  
 'c'  
 >>> next(it)  
-Traceback (most recent call last):  File "<stdin>", line 1, in ?  
-     next(it)  
+Traceback (most recent call last):
+  File "<stdin>", line 1, in ?  
+    next(it)  
 StopIteration  
-
 ```
 
 了解了迭代器协议的后台机制，就可以很容易的给自己的类添加迭代器行为。定义一个 `__iter__()` 方法，使其返回一个带有 `next() `方法的对象。如果这个类已经定义了 `next()` ，那么` __iter__() `只需要返回 `self`:  
 
 ``` 
-
-Class Reverse:  
-"""Iterator for looping over a sequence backwards."""  
-Def __init__(self, data):  
-   Self.data  = data  
-    Self.index = len(data)  
-def __iter__(self):  
-    Return self  
-Def __next__(self):  
-   If self.index == 0:  
-      raise StopIteration  
- Self.index = self.index - 1   
-Return self.data[self.index]  
+class Reverse:  
+    """Iterator for looping over a sequence backwards."""  
+    def __init__(self, data):  
+        self.data  = data  
+        self.index = len(data)  
+    def __iter__(self):  
+        return self  
+    def __next__(self):  
+        if self.index == 0:  
+            raise StopIteration  
+        self.index = self.index - 1   
+        return self.data[self.index] 
+```
+```
 >>> rev = Reverse('spam')  
 >>> iter(rev)  
 <__main__.Reverse object at 0x00A1DB50>  
 >>> for char in rev:  
 ...     print(char)  
 ...  
-M  
-A  
-P  
+m 
+a  
+p  
 s  
-
 ```
 
 ## 9.10. 生成器
@@ -532,19 +522,18 @@ s
 Generator 是创建迭代器的简单而强大的工具。它们写起来就像是正规的函数，需要返回数据的时候使用 yield 语句。每次` next() `被调用时，生成器回复它脱离的位置（它记忆语句最后一次执行的位置和所有的数据值）。以下示例演示了生成器可以很简单的创建出来:  
 
 ```
-
-Ef reverse(data):  
-  for index in range(len(data)-1, -1, -1): 
-      Yield data[index]  
-
+def reverse(data):  
+    for index in range(len(data)-1, -1, -1): 
+        yield data[index]  
+```
+```
 >>> for char in reverse('golf'):  
 ...     print(char)  
 ...  
-F  
-L  
+f  
+l  
 O  
 g  
-
 ```
 
 前一节中描述了基于类的迭代器，它能作的每一件事生成器也能作到。因为自动创建了`__iter__() `和 `next()` 方法，生成器显得如此简洁。  
@@ -562,21 +551,25 @@ g
 ```
 >>> sum(i*i for i in range(10))              # sum of squares  
 285  
+
 >>> xvec = [10, 20, 30]    
 >>> yvec = [7, 5, 3]    
->>> sum(x*y for x,y in zip(xvec, yvec))   # dot product  
-260  
+>>> sum(x*y for x,y in zip(xvec, yvec))      # dot product  
+260 
+
 >>> from math import pi, sin  
 >>> sine_table = {x: sin(x*pi/180) for x in range(0, 91)}
->>> unique_words = set(word for line in page  for word in   line.split())  
->>>> valedictorian = max((student.gpa, student.name) for student in graduates)  
+
+>>> unique_words = set(word for line in page  for word in   line.split())
+
+>>>> valedictorian = max((student.gpa, student.name) for student in graduates) 
+
 >>>> data = 'golf'  
 >>> list(data[i] for i in range(len(data)-1, -1, -1))  
 ['f', 'l', 'o', 'g']  
-
 ```
 
-脚注：
+**脚注**：
 
 <a href="#[1]">[1]</a>	有一个例外。模块对象有一个隐秘的只读对象，名为 `__dict__ `，它返回用于实现模块命名空间的字典，命名` __dict__ `是一个属性而非全局命名。显然，使用它违反了命名空间实现的抽象原则，应该被严格限制于调试中。
 
