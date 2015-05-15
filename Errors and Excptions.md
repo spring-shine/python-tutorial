@@ -214,6 +214,7 @@ class InputError(Error):
      def __init__(self, expression, message):  
          self.expression = expression  
          self.message = message
+         
 class TransitionError(Error):  
     """Raised when an operation attempts a state transition that's not
     allowed.
