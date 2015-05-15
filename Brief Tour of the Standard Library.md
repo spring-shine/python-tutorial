@@ -6,12 +6,11 @@ os 模块提供了很多与操作系统交互的函数:
 
 ```
 >>> import os  
->>> os.getcwd()                # Return the current working directory  
+>>> os.getcwd()      # Return the current working directory  
 'C:\\Python34'  
 >>> os.chdir('/server/accesslogs')   # Change current working directory  
->>> os.system('mkdir today')   # Run the command mkdir in the system  
-shell0  
-
+>>> os.system('mkdir today')   # Run the command mkdir in the system  shell
+0  
 ```
 
 应该用 `import os` 风格而非 `from os import *`。这样可以保证随操作系统不同而有所变化的 `os.open()` 不会覆盖内置函数 `open()`
@@ -24,7 +23,6 @@ shell0
 <returns a list of all module functions>  
 >>> help(os)  
 <returns an extensive manual page created from the module's docstrings>  
-
 ```
 
 针对日常的文件和目录管理任务，shutil模块提供了一个易于使用的高级接口:
@@ -50,7 +48,6 @@ shell0
 >>> import glob  
 >>> glob.glob('*.py') 
 ['primes.py', 'random.py', 'quote.py']  
-
 ```
 
 ## 10.3. 命令行参数
@@ -62,7 +59,6 @@ shell0
 >>> import sys  
 >>> print(sys.argv)  
 ['demo.py', 'one', 'two', 'three']  
-
 ```
 
 `getopt` 模块使用 `Unix getopt()` 函处理 `sys.argv` 。更多的复杂命令行处理由`argparse` 模块提供。
@@ -72,8 +68,8 @@ shell0
 `sys` 还有 `stdin`，`stdout` 和 `stderr` 属性,即使在 `stdout` 被重定向时，后者也可以用于显示警告和错误信息:
 
 ```
->>> sys.stderr.write('Warning, log file not found starting a new one\n')  Warning, log file not found starting a new one  
-
+>>> sys.stderr.write('Warning, log file not found starting a new one\n')  
+Warning, log file not found starting a new one  
 ```
 
 大多脚本的定向终止都使用 `sys.exit()`。
@@ -88,16 +84,13 @@ shell0
 ['foot', 'fell', 'fastest']  
 >>> re.sub(r'(\b[a-z]+) \1', r'\1', 'cat in the the hat') 
 'cat in the hat'  
-
 ```
 
 只需简单的操作时，字符串方法最好用，因为它们易读，又容易调试:
 
 ```
-
 >>> 'tea for too'.replace('too', 'two')  
 'tea for two'  
-
 ```
 
 ## 10.6. 数学
@@ -105,13 +98,11 @@ shell0
 `math` 模块为浮点运算提供了对底层 `C`函数库的访问:
 
 ```
-
 >>> import math
 >>> math.cos(math.pi / 4)
 0.70710678118654757
 >>> math.log(1024, 2)
 10.0
-
 ```
 
 `random` 提供了生成随机数的工具:
@@ -122,10 +113,10 @@ shell0
 'apple'  
 >>> random.sample(range(100), 10)   # sampling without replacement  
 [30, 83, 16, 4, 8, 81, 41, 50, 18, 33]  
->>> random.random()    # random float0.17970987693706186  
+>>> random.random()    # random float
+0.17970987693706186  
 >>> random.randrange(6)     # random integer chosen from range(6)  
 4  
-
 ```
 
 `SciPy <http://scipy.org>` 项目提供了许多数值计算的模块。
@@ -136,10 +127,15 @@ shell0
 
 ```
 >>> from urllib.request import urlopen  
->>> for line in urlopen('http://tycho.usno.navy.mil/cgi-bin/timer.pl'):  
-...     Line = line.decode('utf-8')  # Decoding the binary data to text.  
-...     If 'EST' in line or 'EDT' in line:  # look for Eastern Time  
-...       print(line)<BR>Nov. 25, 09:43:32 PM EST>>> import smtplib  
+>>> with urlopen('http://tycho.usno.navy.mil/cgi-bin/timer.pl') as responese:
+...     for line in responese:
+...         line = line.decode('utf-8')  # Decoding the binary data to text.  
+...         if 'EST' in line or 'EDT' in line:  # look for Eastern Time  
+...         print(line)
+
+<BR>Nov. 25, 09:43:32 PM EST
+
+>>> import smtplib  
 >>> server = smtplib.SMTP('localhost')  
 >>> server.sendmail('soothsayer@example.org', 'jcaesar@example.org',  
 ... """To: jcaesar@example.org  
@@ -148,7 +144,6 @@ shell0
 ... Beware the Ides of March  
 .... """)  
 >>> server.quit()  
-
 ```
 
 (注意第二个例子需要在 `localhost` 运行一个邮件服务器。)
@@ -161,14 +156,16 @@ shell0
 >>> # dates are easily constructed and formatted  
 >>> from datetime import dat  
 >>> now = date.today()  
->>> nowdatetime.date(2003, 12, 2)  
+>>> now
+datetime.date(2003, 12, 2)  
 >>> now.strftime("%m-%d-%y. %d %b %Y is a %A on the %d day of %B.")  
-'12-02-03. 02 Dec 2003 is a Tuesday on the 02 day of December.'  
+'12-02-03. 02 Dec 2003 is a Tuesday on the 02 day of December.'
+
 >>> # dates support calendar arithmetic  
 >>> birthday = date(1964, 7, 31)   
 >>> age = now - birthday  
->>> age.days14368  
-
+>>> age.days
+14368  
 ```
 
 ## 10.9. 数据压缩
@@ -187,7 +184,6 @@ shell0
 b'witch which has which witches wrist watch'  
 >>> zlib.crc32(s)  
 226805979  
-
 ```
 
 ## 10.10. 性能度量
@@ -202,7 +198,6 @@ b'witch which has which witches wrist watch'
 0.57535828626024577  
 >>> Timer('a,b = b,a', 'a=1; b=2').timeit()  
 0.54962537085770791  
-
 ```
 
 相对于 `timeit` 的细粒度，`profile`和 `pstats` 模块提供了针对更大代码块的时间度量工具。
@@ -214,46 +209,35 @@ b'witch which has which witches wrist watch'
 `doctest` 模块提供了一个工具，扫描模块并根据程序中内嵌的文档字符串执行测试。测试构造如同简单的将它的输出结果剪切并粘贴到文档字符串中。通过用户提供的例子，它发展了文档，允许 `doctest` 模块确认代码的结果是否与文档一致:
 
 ```
-    Def average(values):  
+def average(values):  
 
     """Computes the arithmetic mean of a list of numbers.  
 
     >>> print(average([20, 30, 70]))    
-    
- 
  	40.0  
-
     """  
- Return sum(values) / len(values)  
+    return sum(values) / len(values)  
 
 import doctest 
-
-doctest.testmod()   # automatically validate the embedded tests
-
+doctest.testmod()    # automatically validate the embedded tests
 ```
 
 `unittest` 模块不像 `doctest` 模块那么容易使用，不过它可以在一个独立的文件里提供一个更全面的测试集:
 
 ```
-Import unittest  
+import unittest  
 
 class TestStatisticalFunctions(unittest.TestCase):  
 
-     Def test_average(self):  
-
-          self.assertEqual(average([20, 30, 70]), 40.0)  
-
-          self.assertEqual(round(average([1, 5, 7]), 1), 4.3)  
-
-          With self.assertRaises(ZeroDivisionError):  
-
+    def test_average(self):  
+        self.assertEqual(average([20, 30, 70]), 40.0)  
+        self.assertEqual(round(average([1, 5, 7]), 1), 4.3)  
+          with self.assertRaises(ZeroDivisionError):  
                average([])   
-
-          With self.assertRaises(TypeError):  
-
-              average(20, 30, 70)  
-unittest.main() # Calling from the command line invokes all tests 
-
+          with self.assertRaises(TypeError):  
+              average(20, 30, 70) 
+              
+unittest.main()   # Calling from the command line invokes all tests 
 ```
 
 ## 10.12. “瑞士军刀”
